@@ -1,3 +1,19 @@
+export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
 export const getWeekStartDate = (date) => {
   const dateCopy = new Date(date);
   const dayOfWeek = dateCopy.getDay();
@@ -26,22 +42,14 @@ export const getDateTime = (date, time) => {
   return withMinutes;
 };
 
-export const formatMins = (mins) => {
+export const formatTimeWithZero = (mins) => {
   return mins < 10 ? `0${mins}` : mins;
 };
 
-export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-export const months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+export const isLastWeekInMonth = (weekDates) => {
+  const firstDay = weekDates[0].getMonth();
+  const lastDay = weekDates[weekDates.length - 1].getMonth();
+  return firstDay === lastDay
+    ? months[firstDay]
+    : `${months[firstDay]} - ${months[lastDay]}`;
+};

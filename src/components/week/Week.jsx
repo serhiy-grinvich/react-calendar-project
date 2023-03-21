@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Day from '../day/Day';
+import moment from 'moment';
 
 import './week.scss';
 
-const Week = ({ weekDates, events }) => {
+const Week = ({ weekDates, events, onCreate, onDelete }) => {
   return (
-    <div className="calendar__week">
+    <div className="calendar__week" onClick={onCreate}>
       {weekDates.map((dayStart) => {
         const dayEnd = new Date(dayStart.getTime()).setHours(
           dayStart.getHours() + 24
@@ -19,8 +20,9 @@ const Week = ({ weekDates, events }) => {
         return (
           <Day
             key={dayStart.getDate()}
-            dataDay={dayStart.getDate()}
+            dataDay={moment(dayStart).format('YYYY-MM-DD')}
             dayEvents={dayEvents}
+            onDelete={onDelete}
           />
         );
       })}
