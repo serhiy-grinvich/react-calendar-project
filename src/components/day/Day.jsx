@@ -19,6 +19,7 @@ const Day = ({ dataDay, dayEvents, onDelete }) => {
         return (
           <Hour
             key={dataDay + hour}
+            dataDay={dataDay}
             dataHour={hour}
             hourEvents={hourEvents}
             onDelete={onDelete}

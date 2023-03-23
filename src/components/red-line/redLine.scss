@@ -1,0 +1,20 @@
+.red-line {
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+
+  &__circle {
+    position: absolute;
+    top: -5px;
+    left: -8px;
+    width: 14px;
+    height: 14px;
+    background-color: rgb(254, 42, 42);
+    border-radius: 50%;
+  }
+
+  &__line {
+    border-top: 3px solid rgb(254, 42, 42);
+    opacity: 0.7;
+  }
+}

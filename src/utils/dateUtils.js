@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 export const months = [
   'January',
@@ -27,12 +29,12 @@ export const getWeekStartDate = (date) => {
 };
 
 export const generateWeekRange = (startDate) => {
-  const result = [];
+  const weekDates = [];
   for (let i = 0; i < 7; i += 1) {
     const base = new Date(startDate);
-    result.push(new Date(base.setDate(base.getDate() + i)));
+    weekDates.push(new Date(base.setDate(base.getDate() + i)));
   }
-  return result;
+  return weekDates;
 };
 
 export const getDateTime = (date, time) => {
@@ -42,8 +44,8 @@ export const getDateTime = (date, time) => {
   return withMinutes;
 };
 
-export const formatTimeWithZero = (mins) => {
-  return mins < 10 ? `0${mins}` : mins;
+export const formatTimeWithZero = (timeUnit) => {
+  return timeUnit < 10 ? `0${timeUnit}` : timeUnit;
 };
 
 export const isLastWeekInMonth = (weekDates) => {
@@ -53,3 +55,21 @@ export const isLastWeekInMonth = (weekDates) => {
     ? months[firstDay]
     : `${months[firstDay]} - ${months[lastDay]}`;
 };
+
+export const setDefaultEventTime = (eventStartDate, eventStartTime) => {
+  const defaultDate = {};
+  defaultDate.eventDate = eventStartDate
+    ? eventStartDate
+    : moment().format('YYYY-MM-DD');
+  defaultDate.timeFrom = eventStartTime
+    ? `${formatTimeWithZero(eventStartTime - 1)}:00`
+    : moment().format('HH:mm');
+  defaultDate.timeTo = eventStartTime
+    ? `${formatTimeWithZero(eventStartTime)}:00`
+    : moment().add(1, 'hours').format('HH:mm');
+
+  return defaultDate;
+};
+
+export const isCurrentDate = (date) =>
+  moment().format('MMM Do YY') === moment(date).format('MMM Do YY');

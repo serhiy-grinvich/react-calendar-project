@@ -1,11 +1,13 @@
 .event {
   position: absolute;
   width: 80%;
+  min-height: 100%;
   background-color: cornflowerblue;
   z-index: 1;
   border-radius: 8px;
   padding: 8px;
   color: #fff;
+  overflow: visible;
 
   &__title {
     width: 100%;
@@ -17,7 +19,7 @@
 
   &:hover {
     font-weight: bold;
-    background-color: red;
+    background-color: rgba(219, 19, 19, 0.644);
   }
 }
 
@@ -26,7 +28,7 @@
   top: 0px;
   right: -70px;
   z-index: 3;
-  width: 80px;
+  width: 100px;
   height: 36px;
   display: flex;
   justify-content: center;
@@ -34,5 +36,10 @@
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  padding: 4px 20px;
+  padding: 4px 10px;
+  color: rgba(0, 0, 0, 0.6);
+
+  &__icon {
+    margin-right: 10px;
+  }
 }

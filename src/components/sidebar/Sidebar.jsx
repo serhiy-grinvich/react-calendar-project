@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { formatTimeWithZero } from '../../utils/dateUtils';
 
 import './sidebar.scss';

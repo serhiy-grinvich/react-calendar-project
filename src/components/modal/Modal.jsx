@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import moment from 'moment';
-import events from '../../gateway/events';
-import { formatTimeWithZero } from '../../utils/dateUtils';
+
+import { setDefaultEventTime } from '../../utils/dateUtils';
+import { createNewEvent } from '../../gateway/eventsGateway';
 
 import './modal.scss';
 
@@ -9,48 +9,37 @@ class Modal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentDate: '',
+      eventDate: '',
       timeFrom: '',
       timeTo: '',
+      title: '',
+      description: '',
     };
   }
   componentDidMount() {
-    this.setState(this.setDefaultEventTime());
+    const { eventStartDate, eventStartTime } = this.props;
+    this.setState(setDefaultEventTime(eventStartDate, eventStartTime));
   }
-
-  setDefaultEventTime = () => {
-    const { eventDate, eventStartTime } = this.props;
-    const defaultDate = {};
-    defaultDate.currentDate = eventDate
-      ? eventDate
-      : moment().format('YYYY-MM-DD');
-    defaultDate.timeFrom = eventStartTime
-      ? `${formatTimeWithZero(eventStartTime - 1)}:00`
-      : moment().format('HH:mm');
-    defaultDate.timeTo = eventStartTime
-      ? `${formatTimeWithZero(eventStartTime)}:00`
-      : moment().add(1, 'hours').format('HH:mm');
-
-    return defaultDate;
-  };
 
   createEventHandler = (e) => {
     e.preventDefault();
-    const { title, description } = e.target;
-    const { currentDate, timeFrom, timeTo } = this.state;
+    const { eventDate, timeFrom, timeTo, title, description } = this.state;
     const newTask = {
-      id: Math.random(),
-      title: title.value,
-      description: description.value,
-      dateFrom: new Date(`${currentDate} ${timeFrom}`),
-      dateTo: new Date(`${currentDate} ${timeTo}`),
+      title,
+      description,
+      dateFrom: new Date(`${eventDate} ${timeFrom}`),
+      dateTo: new Date(`${eventDate} ${timeTo}`),
     };
-    events.push(newTask);
-    this.props.onClose();
+    createNewEvent(newTask).then(() => {
+      this.props.onClose();
+      this.props.onUpdateEventsList();
+    });
   };
 
   render() {
-    // console.log(this.state);
+    const { eventDate, timeFrom, timeTo, title, description } = this.state;
+
+    console.log(this.state);
     console.log(this.props);
     return (
       <div className="modal overlay">
@@ -68,6 +57,8 @@ class Modal extends Component {
                 name="title"
                 placeholder="Title"
                 className="event-form__field"
+                value={title}
+                onChange={(e) => this.setState({ title: e.target.value })}
                 required
               />
               <div className="event-form__time">
@@ -75,17 +66,15 @@ class Modal extends Component {
                   type="date"
                   name="date"
                   className="event-form__field"
-                  value={this.state.currentDate}
-                  onChange={(e) =>
-                    this.setState({ currentDate: e.target.value })
-                  }
+                  value={eventDate}
+                  onChange={(e) => this.setState({ eventDate: e.target.value })}
                   required
                 />
                 <input
                   type="time"
                   name="startTime"
                   className="event-form__field"
-                  value={this.state.timeFrom}
+                  value={timeFrom}
                   // step="900"
                   onChange={(e) => this.setState({ timeFrom: e.target.value })}
                   required
@@ -95,7 +84,7 @@ class Modal extends Component {
                   type="time"
                   name="endTime"
                   className="event-form__field"
-                  value={this.state.timeTo}
+                  value={timeTo}
                   // step="900"
                   onChange={(e) => this.setState({ timeTo: e.target.value })}
                   required
@@ -105,6 +94,8 @@ class Modal extends Component {
                 name="description"
                 placeholder="Description"
                 className="event-form__field"
+                value={description}
+                onChange={(e) => this.setState({ description: e.target.value })}
               ></textarea>
               <button type="submit" className="event-form__submit-btn">
                 Create

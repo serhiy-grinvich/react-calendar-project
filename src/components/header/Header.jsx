@@ -8,11 +8,11 @@ const Header = ({
   setNextWeek,
   setCurrentWeek,
   weekDates,
-  onCreate,
+  onOpenModal,
 }) => {
   return (
     <header className="header">
-      <button className="button create-event-btn" onClick={onCreate}>
+      <button className="button create-event-btn" onClick={onOpenModal}>
         <i className="fas fa-plus create-event-btn__icon"></i>
         Create
       </button>
