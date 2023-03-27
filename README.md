@@ -3,6 +3,10 @@
 
 Layout supports desktop (up-to-1400) version
 
+ cli commands:
+- "npm start" 
+- "npm run build"
+
 ### The tech stack is:
 
 - [HTML5](https://en.wikipedia.org/wiki/HTML5)
