@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import moment from 'moment';
 
 import Day from '../day/Day';
@@ -30,3 +31,10 @@ const Week = ({ weekDates, events, onOpenModal, onDelete }) => {
 };
 
 export default Week;
+
+Week.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  events: PropTypes.array.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

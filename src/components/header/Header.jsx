@@ -1,6 +1,7 @@
 import React from 'react';
-import { isLastWeekInMonth } from '../../utils/dateUtils';
+import PropTypes from 'prop-types';
 
+import { isLastWeekInMonth } from '../../utils/dateUtils';
 import './header.scss';
 
 const Header = ({
@@ -44,3 +45,11 @@ const Header = ({
 };
 
 export default Header;
+
+Header.propTypes = {
+  setPrevWeek: PropTypes.func.isRequired,
+  setNextWeek: PropTypes.func.isRequired,
+  setCurrentWeek: PropTypes.func.isRequired,
+  weekDates: PropTypes.array.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
+};

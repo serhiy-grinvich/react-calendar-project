@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import { days, isCurrentDate } from '../../utils/dateUtils.js';
 
@@ -32,4 +32,6 @@ const Navigation = ({ weekDates }) => {
 
 export default Navigation;
 
-// add key to list elem in render
+Navigation.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+};

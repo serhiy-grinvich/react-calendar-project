@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
 import Header from './components/header/Header.jsx';
 import Calendar from './components/calendar/Calendar.jsx';
@@ -7,68 +7,54 @@ import { getWeekStartDate, generateWeekRange } from '../src/utils/dateUtils.js';
 
 import './common.scss';
 
-class App extends Component {
-  state = {
-    weekStartDate: new Date(),
-    isModalActive: false,
-  };
+const App = () => {
+  const [weekStartDate, setWeekStartDate] = useState(new Date());
+  const [isModalActive, setModalVisibilityStatus] = useState(false);
 
-  setPreviousWeek = () => {
-    const { weekStartDate } = this.state;
+  const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
+
+  const setPreviousWeek = () => {
     const oneWeekAgo = new Date(
       weekStartDate.setDate(weekStartDate.getDate() - 7)
     );
-    this.setState({ weekStartDate: oneWeekAgo });
+    setWeekStartDate(oneWeekAgo);
   };
 
-  setNextWeek = () => {
-    const { weekStartDate } = this.state;
+  const setNextWeek = () => {
     const oneWeekNext = new Date(
       weekStartDate.setDate(weekStartDate.getDate() + 7)
     );
-    this.setState({ weekStartDate: oneWeekNext });
+    setWeekStartDate(oneWeekNext);
   };
 
-  setCurrentWeek = () => {
-    this.setState({ weekStartDate: new Date() });
+  const setCurrentWeek = () => {
+    setWeekStartDate(new Date());
   };
 
-  onCloseModalHandler = () => {
-    this.setState({
-      isModalActive: false,
-    });
+  const onCloseModalHandler = () => {
+    setModalVisibilityStatus(false);
   };
 
-  onOpenModalHandler = (e) => {
-    this.setState({
-      isModalActive: true,
-    });
+  const onOpenModalHandler = () => {
+    setModalVisibilityStatus(true);
   };
 
-  render() {
-    const { weekStartDate, isModalActive } = this.state;
-    const weekDates = generateWeekRange(getWeekStartDate(weekStartDate));
-
-    return (
-      <>
-        <Header
-          setPrevWeek={this.setPreviousWeek}
-          setNextWeek={this.setNextWeek}
-          setCurrentWeek={this.setCurrentWeek}
-          weekDates={weekDates}
-          onOpenModal={this.onOpenModalHandler}
-        />
-        <Calendar
-          weekDates={weekDates}
-          onOpenModal={this.onOpenModalHandler}
-          onCloseModal={this.onCloseModalHandler}
-          isModalActive={isModalActive}
-        />
-      </>
-    );
-  }
-}
-
+  return (
+    <>
+      <Header
+        setPrevWeek={setPreviousWeek}
+        setNextWeek={setNextWeek}
+        setCurrentWeek={setCurrentWeek}
+        weekDates={weekDates}
+        onOpenModal={onOpenModalHandler}
+      />
+      <Calendar
+        weekDates={weekDates}
+        onOpenModal={onOpenModalHandler}
+        onCloseModal={onCloseModalHandler}
+        isModalActive={isModalActive}
+      />
+    </>
+  );
+};
 export default App;
-
-// realize setPrevWeek & setNextWeek callback

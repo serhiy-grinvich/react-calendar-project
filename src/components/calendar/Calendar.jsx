@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
@@ -6,82 +7,79 @@ import Sidebar from '../sidebar/Sidebar';
 import Modal from '../modal/Modal';
 
 import { fetchEvents } from '../../gateway/eventsGateway';
-
 import './calendar.scss';
 
-class Calendar extends Component {
-  state = {
-    events: [],
+const Calendar = ({ weekDates, onOpenModal, onCloseModal, isModalActive }) => {
+  const [events, setEventsList] = useState([]);
+  const [eventStartFrom, setEventStart] = useState({
     eventStartDate: '',
     eventStartTime: '',
-  };
+  });
 
-  componentDidMount() {
-    this.onUpdateEventsList();
-  }
+  useEffect(() => {
+    onUpdateEventsList();
+  }, []);
 
-  onUpdateEventsList = () => {
+  const { eventStartDate, eventStartTime } = eventStartFrom;
+
+  const onUpdateEventsList = () => {
     fetchEvents().then((eventsData) => {
       const eventsWithDateObj = eventsData.map((event) => ({
         ...event,
         dateFrom: new Date(event.dateFrom),
         dateTo: new Date(event.dateTo),
       }));
-      this.setState({ events: eventsWithDateObj });
+      setEventsList(eventsWithDateObj);
     });
   };
 
-  onOpenModal = (e) => {
-    this.setState({
+  const onOpenModalWindow = (e) => {
+    setEventStart({
       eventStartTime: e.target.dataset.time,
       eventStartDate: e.target.parentNode.dataset.day,
     });
-    this.props.onOpenModal();
+    onOpenModal();
   };
 
-  onCloseModal = () => {
-    this.setState({
+  const onCloseModalWindow = () => {
+    setEventStart({
       eventStartTime: '',
       eventStartDate: '',
     });
-    this.props.onCloseModal();
+    onCloseModal();
   };
 
-  onDeleteEvent = () => {
-    this.onUpdateEventsList();
-  };
-
-  render() {
-    const { weekDates, onOpenModal, onCloseModal, isModalActive } = this.props;
-    const { eventStartDate, eventStartTime, events } = this.state;
-    const currentDate = new Date();
-    console.log(this.state);
-
-    return (
-      <section className="calendar">
-        <Navigation weekDates={weekDates} />
-        <div className="calendar__body">
-          <div className="calendar__week-container">
-            <Sidebar />
-            <Week
-              weekDates={weekDates}
-              events={events}
-              onOpenModal={this.onOpenModal}
-              onDelete={this.onDeleteEvent}
+  return (
+    <section className="calendar">
+      <Navigation weekDates={weekDates} />
+      <div className="calendar__body">
+        <div className="calendar__week-container">
+          <Sidebar />
+          <Week
+            weekDates={weekDates}
+            events={events}
+            onOpenModal={onOpenModalWindow}
+            onDelete={onUpdateEventsList}
+          />
+          {isModalActive && (
+            <Modal
+              onClose={onCloseModalWindow}
+              eventStartDate={eventStartDate}
+              eventStartTime={eventStartTime}
+              onUpdateEventsList={onUpdateEventsList}
             />
-            {isModalActive && (
-              <Modal
-                onClose={this.onCloseModal}
-                eventStartDate={eventStartDate}
-                eventStartTime={eventStartTime}
-                onUpdateEventsList={this.onUpdateEventsList}
-              />
-            )}
-          </div>
+          )}
         </div>
-      </section>
-    );
-  }
-}
+      </div>
+    </section>
+  );
+};
 
 export default Calendar;
+
+Calendar.propTypes = {
+  weekDates: PropTypes.array.isRequired,
+  onOpenModal: PropTypes.func.isRequired,
+  onCloseModal: PropTypes.func.isRequired,
+  isModalActive: PropTypes.bool.isRequired,
+};

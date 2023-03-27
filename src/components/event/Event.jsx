@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import PropTypes from 'prop-types';
 import { deleteEvent } from '../../gateway/eventsGateway';
 
 import './event.scss';
@@ -26,7 +26,7 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
       className="event"
       data-id={id}
       onClick={handleClick}
-      // onMouseLeave={() => toggleDeleteBtnVisibility(false)}
+      onMouseLeave={() => toggleDeleteBtnVisibility(false)}
     >
       <button
         className={`delete-event-btn ${!isDeleteBtnVisible && 'hidden'} `}
@@ -41,3 +41,12 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
 };
 
 export default Event;
+
+Event.propTypes = {
+  height: PropTypes.number.isRequired,
+  marginTop: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  time: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  onDelete: PropTypes.func.isRequired,
+};

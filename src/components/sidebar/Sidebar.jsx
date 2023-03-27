@@ -4,7 +4,7 @@ import { formatTimeWithZero } from '../../utils/dateUtils';
 
 import './sidebar.scss';
 
-const Sidebar = (props) => {
+const Sidebar = () => {
   const hours = Array(24)
     .fill()
     .map((val, index) => index);
@@ -23,5 +23,3 @@ const Sidebar = (props) => {
 };
 
 export default Sidebar;
-
-// add key to list elem in render

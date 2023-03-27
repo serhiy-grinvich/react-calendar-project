@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 
 import './redLine.scss';
 
-const RedLine = () => {
+const RedLine = ({ onUpdateHour }) => {
   const [redLinePosition, setRedLinePosition] = useState(
     new Date().getMinutes()
   );
@@ -10,6 +11,7 @@ const RedLine = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       setRedLinePosition(new Date().getMinutes());
+      onUpdateHour();
     }, 1000 * 60);
     return () => {
       clearInterval(intervalId);
@@ -25,3 +27,7 @@ const RedLine = () => {
 };
 
 export default RedLine;
+
+RedLine.propTypes = {
+  onUpdateHour: PropTypes.func.isRequired,
+};
