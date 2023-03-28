@@ -30,6 +30,7 @@ const Calendar = ({ weekDates, onOpenModal, onCloseModal, isModalActive }) => {
         dateTo: new Date(event.dateTo),
       }));
       setEventsList(eventsWithDateObj);
+      console.log(eventsWithDateObj);
     });
   };
 

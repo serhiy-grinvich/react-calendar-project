@@ -21,22 +21,24 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
   };
 
   return (
-    <div
-      style={eventStyle}
-      className="event"
-      data-id={id}
-      onClick={handleClick}
-      onMouseLeave={() => toggleDeleteBtnVisibility(false)}
-    >
+    <>
       <button
         className={`delete-event-btn ${!isDeleteBtnVisible && 'hidden'} `}
         onClick={deleteEventHandler}
       >
         <i className="fas fa-trash delete-event-btn__icon"></i> Delete
       </button>
-      <div className="event__title">{title}</div>
-      <div className="event__time">{time}</div>
-    </div>
+      <div
+        style={eventStyle}
+        className="event"
+        data-id={id}
+        onClick={handleClick}
+        // onMouseLeave={() => toggleDeleteBtnVisibility(false)}
+      >
+        <div className="event__title">{title}</div>
+        <div className="event__time">{time}</div>
+      </div>
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 
 import { setDefaultEventTime } from '../../utils/dateUtils';
 import { createNewEvent } from '../../gateway/eventsGateway';
-
 import './modal.scss';
 
 const Modal = ({
@@ -32,10 +32,12 @@ const Modal = ({
     const newTask = {
       title,
       description,
-      dateFrom: new Date(`${eventDate} ${timeFrom}`),
-      dateTo: new Date(`${eventDate} ${timeTo}`),
+      // use .replace( ) for  solve parsing date problems in Safari
+      dateFrom: `${eventDate.replace(/-/g, '/')} ${timeFrom}`,
+      dateTo: `${eventDate.replace(/-/g, '/')} ${timeTo}`,
     };
     createNewEvent(newTask).then(() => {
+      console.log(newTask);
       onClose();
       onUpdateEventsList();
     });
