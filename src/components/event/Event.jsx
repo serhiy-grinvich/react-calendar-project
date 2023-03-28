@@ -16,12 +16,16 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
     toggleDeleteBtnVisibility(!isDeleteBtnVisible);
   };
 
-  const deleteEventHandler = () => {
+  const deleteEventHandler = (e) => {
+    e.stopPropagation();
     deleteEvent(id).then(() => onDelete());
   };
 
   return (
-    <>
+    <div
+      onClick={handleClick}
+      onMouseLeave={() => toggleDeleteBtnVisibility(false)}
+    >
       <button
         className={`delete-event-btn ${!isDeleteBtnVisible && 'hidden'} `}
         onClick={deleteEventHandler}
@@ -32,13 +36,13 @@ const Event = ({ height, marginTop, title, time, id, onDelete }) => {
         style={eventStyle}
         className="event"
         data-id={id}
-        onClick={handleClick}
+        // onClick={handleClick}
         // onMouseLeave={() => toggleDeleteBtnVisibility(false)}
       >
         <div className="event__title">{title}</div>
         <div className="event__time">{time}</div>
       </div>
-    </>
+    </div>
   );
 };
 

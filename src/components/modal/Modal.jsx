@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import moment from 'moment';
+import PropTypes from 'prop-types';
 
 import { setDefaultEventTime } from '../../utils/dateUtils';
 import { createNewEvent } from '../../gateway/eventsGateway';
+import { eventValidation } from '../../utils/validations';
 import './modal.scss';
 
 const Modal = ({
@@ -10,6 +11,7 @@ const Modal = ({
   eventStartTime,
   onClose,
   onUpdateEventsList,
+  eventsList,
 }) => {
   const [event, setEvent] = useState({
     eventDate: '',
@@ -36,11 +38,12 @@ const Modal = ({
       dateFrom: `${eventDate.replace(/-/g, '/')} ${timeFrom}`,
       dateTo: `${eventDate.replace(/-/g, '/')} ${timeTo}`,
     };
-    createNewEvent(newTask).then(() => {
-      console.log(newTask);
-      onClose();
-      onUpdateEventsList();
-    });
+    if (eventValidation(newTask, eventsList)) {
+      createNewEvent(newTask).then(() => {
+        onClose();
+        onUpdateEventsList();
+      });
+    }
   };
 
   return (
@@ -76,7 +79,7 @@ const Modal = ({
                 name="startTime"
                 className="event-form__field"
                 value={timeFrom}
-                // step="900"
+                step="900"
                 onChange={(e) =>
                   setEvent({ ...event, timeFrom: e.target.value })
                 }
@@ -88,7 +91,7 @@ const Modal = ({
                 name="endTime"
                 className="event-form__field"
                 value={timeTo}
-                // step="900"
+                step="900"
                 onChange={(e) => setEvent({ ...event, timeTo: e.target.value })}
                 required
               />
@@ -113,3 +116,11 @@ const Modal = ({
 };
 
 export default Modal;
+
+Modal.propTypes = {
+  eventStartDate: PropTypes.string.isRequired,
+  eventStartTime: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onUpdateEventsList: PropTypes.func.isRequired,
+  eventsList: PropTypes.array.isRequired,
+};

@@ -5,7 +5,6 @@ import Navigation from './../navigation/Navigation';
 import Week from '../week/Week';
 import Sidebar from '../sidebar/Sidebar';
 import Modal from '../modal/Modal';
-
 import { fetchEvents } from '../../gateway/eventsGateway';
 import './calendar.scss';
 
@@ -30,7 +29,6 @@ const Calendar = ({ weekDates, onOpenModal, onCloseModal, isModalActive }) => {
         dateTo: new Date(event.dateTo),
       }));
       setEventsList(eventsWithDateObj);
-      console.log(eventsWithDateObj);
     });
   };
 
@@ -68,6 +66,7 @@ const Calendar = ({ weekDates, onOpenModal, onCloseModal, isModalActive }) => {
               eventStartDate={eventStartDate}
               eventStartTime={eventStartTime}
               onUpdateEventsList={onUpdateEventsList}
+              eventsList={events}
             />
           )}
         </div>

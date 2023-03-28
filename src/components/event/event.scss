@@ -2,12 +2,27 @@
   position: absolute;
   width: 80%;
   min-height: 100%;
-  background-color: cornflowerblue;
+  background-color: rgba(0, 110, 255, 0.621);
   z-index: 1;
   border-radius: 8px;
   padding: 8px;
   color: #fff;
-  overflow: visible;
+  overflow: scroll;
+  box-shadow: 1px 1px 5px 2px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    background-color: rgba(219, 19, 19, 0.444);
+    color: rgba(0, 110, 255, 0.621);
+    .event__title {
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      color: #fff;
+    }
+  }
+
+  &:active {
+    box-shadow: 4px 5px 7px 0px rgba(0, 0, 0, 0.32);
+  }
 
   &__title {
     width: 100%;
@@ -16,17 +31,12 @@
     white-space: nowrap;
     margin-bottom: 8px;
   }
-
-  &:hover {
-    font-weight: bold;
-    background-color: rgba(219, 19, 19, 0.644);
-  }
 }
 
 .delete-event-btn {
   position: absolute;
-  top: 0px;
-  right: -70px;
+  top: 8px;
+  left: 75%;
   z-index: 3;
   width: 100px;
   height: 36px;
@@ -36,10 +46,26 @@
   cursor: pointer;
   border: none;
   border-radius: 8px;
-  padding: 4px 10px;
+  padding: 4px 6px;
+  background-color: rgba(246, 218, 218);
   color: rgba(0, 0, 0, 0.6);
+  box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.2);
+
+  &:active {
+    box-shadow: 4px 5px 7px 0px rgba(0, 0, 0, 0.32);
+  }
+
+  &:hover {
+    color: rgba(159, 7, 7, 1);
+    // font-weight: 700;
+
+    .delete-event-btn__icon {
+      color: rgba(0, 110, 255, 0.621);
+    }
+  }
 
   &__icon {
     margin-right: 10px;
+    color: rgba(159, 7, 7, 0.638);
   }
 }

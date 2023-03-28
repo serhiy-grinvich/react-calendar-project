@@ -6,9 +6,11 @@
 
   &__content {
     background: #fff;
+    // background-color: rgba(246, 218, 218, 0.743);
     padding: 16px;
     border: 1px solid #ccc;
     border-radius: 8px;
+    box-shadow: 6px 12px 31px -9px rgba(0, 0, 0, 0.62);
   }
 }
 
@@ -46,6 +48,12 @@
   &__field {
     margin: 8px;
     border: none;
+    // background-color: rgba(246, 218, 218, 0.9);
+    &:focus {
+      border: none;
+      outline: none;
+      border-bottom: 2px solid cornflowerblue;
+    }
   }
 
   &__submit-btn {
@@ -58,5 +66,9 @@
     border: none;
     padding: 8px 16px;
     border-radius: 8px;
+    box-shadow: 3px 3px 10px -8px rgba(0, 0, 0, 0.62);
+    &:active {
+      box-shadow: 1px 1px 8px 0px rgba(0, 0, 0, 0.32);
+    }
   }
 }

@@ -10,6 +10,22 @@
 
   &__icon {
     margin-right: 8px;
+    color: rgba(0, 110, 255, 0.621);
+  }
+  &:hover {
+    .create-event-btn__icon {
+      color: rgba(0, 110, 255, 0.8);
+    }
+  }
+  &:active {
+    .create-event-btn__icon {
+      animation: create-icon-active 0.5s linear;
+    }
+  }
+}
+@keyframes create-icon-active {
+  100% {
+    transform: rotate(180deg);
   }
 }
 
@@ -22,9 +38,13 @@
   &__nav-icon {
     font-size: 16px;
     margin-left: 20px;
+    &:active {
+      color: rgba(219, 19, 19, 0.444);
+    }
   }
 
   &__displayed-month {
     margin-left: 10px;
+    color: rgba(0, 0, 0, 0.8);
   }
 }
